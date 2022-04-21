@@ -7,8 +7,8 @@
   },
   "dependencyDashboard": true,
   "branchConcurrentLimit": 50,
+  "prHourlyLimit": 0,
   "prConcurrentLimit": 50,
   "automerge": true,
   "automergeType": "branch"
-
 }
