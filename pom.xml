@@ -84,6 +84,23 @@
           </configuration>
         </plugin>
 
+        <!-- 
+          todo: migrate to <groupId>com.spotify.fmt</groupId>
+          https://github.com/spotify/fmt-maven-plugin
+         -->
+        <plugin>
+          <groupId>com.coveo</groupId>
+          <artifactId>fmt-maven-plugin</artifactId>
+          <version>2.13</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>format</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
           <version>2.5.2</version>
