@@ -110,6 +110,7 @@
             </execution>
           </executions>
           <configuration>
+            <obfuscate>true</obfuscate>
             <proguardVersion>4.5</proguardVersion>
             <libs>
               <lib>${java.home}/lib/rt.jar</lib>
