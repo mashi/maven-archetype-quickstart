@@ -81,7 +81,7 @@
           <version>3.4.0</version>
           <configuration>
             <encoding>${project.build.sourceEncoding}</encoding>
-            <overview>${basedir}/src/javadoc/overview.html</overview>
+            <overview>${basedir}/src/main/javadoc/overview.html</overview>
             <!-- 
               To renderize mathematical formulas written with LaTeX, the mathjax is configured.
               The javadoc options are defined below.
@@ -89,6 +89,7 @@
               See mathjax.org for more information.
              -->
             <additionalOptions>--allow-script-in-comments -header &apos;&lt;script type=&quot;text/javascript&quot; async src=&quot;https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js&quot;&gt;&lt;/script&gt;&apos;</additionalOptions>
+            <docfilessubdirs>true</docfilessubdirs>
           </configuration>
         </plugin>
 

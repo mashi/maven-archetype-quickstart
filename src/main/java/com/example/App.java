@@ -1,6 +1,11 @@
 package com.example;
 
-/** Hello world! */
+/** Hello world! 
+ * <p>
+ * A sample image:
+ * 
+ * <img src="./doc-files/greenSquare.png" />
+*/
 public class App {
   public static void main(String[] args) {
     System.out.println("Hello World!");
