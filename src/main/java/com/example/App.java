@@ -3,7 +3,7 @@ package com.example;
 /** Hello world! 
  * <p>
  * A sample image:
- * 
+ * <p>
  * <img src="./doc-files/greenSquare.png" />
 */
 public class App {
