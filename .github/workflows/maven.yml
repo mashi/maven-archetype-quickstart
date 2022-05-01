@@ -29,7 +29,9 @@ jobs:
         distribution: 'temurin'
 
     - name: lfs
-      run: git lfs install && git lfs checkout
+      run: |
+        apt update && apt install -y git-lfs
+        git lfs install && git lfs checkout --include "*.png"
 
     - name: project check
       run: |
