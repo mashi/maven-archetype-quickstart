@@ -27,7 +27,10 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-      
+
+    - name: lfs
+      run: git lfs install && git lfs checkout
+
     - name: project check
       run: |
         mvn validate
