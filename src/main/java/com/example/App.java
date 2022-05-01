@@ -4,7 +4,7 @@ package com.example;
  * <p>
  * A sample image:
  * <p>
- * <img src="./doc-files/greenSquare.png">
+ * <img src="./doc-files/greenSquare.png" alt="sample image: a green square">
 */
 public class App {
   public static void main(String[] args) {
