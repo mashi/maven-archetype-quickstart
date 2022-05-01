@@ -1,12 +1,36 @@
 <html>
-<head>
-<title>MathJax TeX Test Page</title>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-</head>
-<body>
-When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
-$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
-</body>
+    <body>
+    <h1>Overview File</h1>
+    <p>This is the overview file.
+
+        More information about javadoc can be found at the <a href="https://docs.oracle.com/javase/1.5.0/docs/tooldocs/solaris/javadoc.html">official documentation page</a>.
+    </p>
+
+
+    <p>The folder structure follows the maven-javadoc-plugin <a href="https://maven.apache.org/plugins/maven-javadoc-plugin/examples/javadoc-resources.html">documentation</a>:
+        <div class="source"><pre class="prettyprint linenums">
+            yourproject
+              |-- src
+                 |-- main
+                    |-- java
+                    |  |-- org
+                    |     |-- apache
+                    |        |-- myapp
+                    |         `-- App.java
+                    |         `-- package-info.java
+                    |-- javadoc
+                     `-- overview.html
+                       |-resources
+                       |-- org
+                          |-- apache
+                             |-- myapp
+                              `-- package.html
+                                |-- doc-files
+                                 `-- app.png
+            </pre></div>
+    </p>
+
+    <p>A mathematical formula: \(ax^2 + bx + c = 0\) and they are
+      $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$</p>
+    </body>
 </html>
