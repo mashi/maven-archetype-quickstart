@@ -31,7 +31,7 @@ jobs:
     - name: lfs
       run: |
         apt update && apt install -y git-lfs
-        git lfs install && git lfs checkout --include "*.png"
+        git lfs install && git lfs checkout
 
     - name: project check
       run: |
