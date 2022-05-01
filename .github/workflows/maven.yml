@@ -27,7 +27,12 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-      
+
+    - name: lfs
+      run: |
+        apt update && apt install -y git-lfs
+        git lfs install && git lfs pull --include "*.png"
+
     - name: project check
       run: |
         mvn validate
