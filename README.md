@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/mashi/maven-archetype-quickstart/branch/main/graph/badge.svg?token=FCOMG51FL3)](https://codecov.io/gh/mashi/maven-archetype-quickstart)
+
 # Description
 Java project with maven.
 
@@ -7,7 +9,9 @@ This project utilizes different tools to help the development:
 
 1. Version control with git to track code changes.
 1. Code formatting tool: `mvn fmt:format`.
-1. Documentation generation from the source code: `mvn javadoc:javadoc`. The documentation can be accessed in `target/site/apidocs/index.html`.
+1. Documentation generation from the source code: `mvn javadoc:javadoc`. The documentation can be accessed at `target/site/apidocs/index.html`.
+1. Run unit tests: `mvn test`.
+1. Generate code coverage reports with: `mvn test` or `mvn jacoco:report`. The report can be accessed locally at `target/site/jacoco/index.html` or online clicking at the codecov badge above.
 1. Utilizes the maven project management tool defined in the `pom.xml` file:
     1. It allows the control of dependencies and plugins. To create reproducible configuration, it is possible to specify the version of each entry.
     1. definition of the build process and its output with `mvn package`.
