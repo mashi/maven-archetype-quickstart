@@ -1,4 +1,5 @@
 [![codecov](https://codecov.io/gh/mashi/maven-archetype-quickstart/branch/main/graph/badge.svg?token=FCOMG51FL3)](https://codecov.io/gh/mashi/maven-archetype-quickstart)
+![example workflow](https://github.com/mashi/maven-archetype-quickstart/actions/workflows/maven.yml/badge.svg)
 
 # Description
 Java project with maven.
