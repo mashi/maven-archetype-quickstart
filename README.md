@@ -9,6 +9,7 @@ This project utilizes different tools to help the development:
 
 1. Version control with git to track code changes.
 1. Code formatting tool: `mvn fmt:format`.
+1. Code style check: `mvn checkstyle:check`.
 1. Documentation generation from the source code: `mvn javadoc:javadoc`. The documentation can be accessed at `target/site/apidocs/index.html`.
 1. Run unit tests: `mvn test`.
 1. Generate code coverage reports with: `mvn test` or `mvn jacoco:report`. The report can be accessed locally at `target/site/jacoco/index.html` or online clicking at the codecov badge above.
