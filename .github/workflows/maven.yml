@@ -37,7 +37,7 @@ jobs:
       run: |
         mvn validate
         mvn compile
-        mvn fmt:format
+        mvn fmt:check
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
