@@ -8,4 +8,5 @@
 # To enable this hook, rename this file to "pre-commit".
 echo "executing pre-commit"
 # always format the code before commit
-mvn fmt:format
+mvn fmt:check
+echo "if the commit return an error, try `mvn fmt:check`"
