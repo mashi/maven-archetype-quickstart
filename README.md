@@ -5,10 +5,19 @@
 Java project with maven.
 
 
+## Instructions (development)
+Considering a linux distribution (Ubuntu), run:
+```
+make install
+```
+This command configures the git lfs and configure the pre-commit hook.
+
+
 ## Software and tools
 This project utilizes different tools to help the development:
 
 1. Version control with git to track code changes.
+1. Configuration of git hooks, specifically the pre-commit to prevent different code format from entering the version control.
 1. Code formatting tool: `mvn fmt:format`.
 1. Code style check: `mvn checkstyle:check`.
 1. Documentation generation from the source code: `mvn javadoc:javadoc`. The documentation can be accessed at `target/site/apidocs/index.html`.
