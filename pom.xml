@@ -17,6 +17,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <proguard-base.version>6.2.1</proguard-base.version>
   </properties>
 
   <dependencyManagement>
@@ -48,11 +49,7 @@
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.2.0</version>
         </plugin>
-        <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>3.2.0</version>
-        </plugin>
+
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.10.1</version>
@@ -81,6 +78,15 @@
           <version>3.4.0</version>
           <configuration>
             <encoding>${project.build.sourceEncoding}</encoding>
+            <overview>${basedir}/src/main/javadoc/overview.html</overview>
+            <!-- 
+              To renderize mathematical formulas written with LaTeX, the mathjax is configured.
+              The javadoc options are defined below.
+              
+              See mathjax.org for more information.
+             -->
+            <additionalOptions>--allow-script-in-comments -header &apos;&lt;script type=&quot;text/javascript&quot; async src=&quot;https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js&quot;&gt;&lt;/script&gt;&apos;</additionalOptions>
+            <docfilessubdirs>true</docfilessubdirs>
           </configuration>
         </plugin>
 
@@ -98,32 +104,47 @@
         </plugin>
 
         <plugin>
-          <groupId>com.github.wvengen</groupId>
-          <artifactId>proguard-maven-plugin</artifactId>
-          <version>2.5.3</version>
-          <executions>
-            <execution>
-              <phase>package</phase>
-              <goals>
-                <goal>proguard</goal>
-              </goals>
-            </execution>
-          </executions>
-          <configuration>
-            <obfuscate>true</obfuscate>
-            <proguardVersion>4.5</proguardVersion>
-            <libs>
-              <lib>${java.home}/lib/rt.jar</lib>
-            </libs>
-          </configuration>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>3.1.2</version>
+          <!-- 
+            select the checkstyle version, according to
+            https://maven.apache.org/plugins/maven-checkstyle-plugin/examples/upgrading-checkstyle.html
+           -->
           <dependencies>
             <dependency>
-              <groupId>net.sf.proguard</groupId>
-              <artifactId>proguard-base</artifactId>
-              <version>4.5</version>
-              <scope>runtime</scope>
+              <groupId>com.puppycrawl.tools</groupId>
+              <artifactId>checkstyle</artifactId>
+              <version>10.2</version>
             </dependency>
           </dependencies>
+          <configuration>
+            <encoding>${project.build.sourceEncoding}</encoding>
+            <configLocation>google_checks.xml</configLocation>
+          </configuration>
+        </plugin>
+
+        <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.2.0</version>
+          <executions>
+            <execution>
+              <id>copy-hooks</id>
+              <phase>initialize</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>${basedir}/.git/hooks</outputDirectory>
+                <resources>
+                  <resource>
+                    <directory>git-hooks</directory>
+                  </resource>
+                </resources>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
 
         <plugin>
@@ -143,7 +164,55 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.3.0</version>
         </plugin>
+
+        <plugin>
+          <groupId>com.github.wvengen</groupId>
+          <artifactId>proguard-maven-plugin</artifactId>
+          <version>2.5.2</version>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>proguard</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <obfuscate>true</obfuscate>
+            <proguardVersion>${proguard-base.version}</proguardVersion>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>net.sf.proguard</groupId>
+              <artifactId>proguard-base</artifactId>
+              <version>${proguard-base.version}</version>
+              <scope>runtime</scope>
+            </dependency>
+          </dependencies>
+        </plugin>
       </plugins>
     </pluginManagement>
+
+		<plugins>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.8</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+		</plugins>
   </build>
 </project>

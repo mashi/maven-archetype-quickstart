@@ -1,7 +1,7 @@
 # This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-name: Java CI with Maven
+name: ci
 
 on:
   push:
@@ -27,15 +27,38 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-      
+
+    - name: lfs
+      run: |
+        apt update && apt install -y git-lfs
+        git lfs install && git lfs pull --include "*.png"
+
     - name: project check
       run: |
         mvn validate
         mvn compile
-        mvn fmt:format
+    
+    - name: code format
+      run: |
+        mvn fmt:check
+        mvn checkstyle:check
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     
     - name: doc
       run: mvn javadoc:javadoc
+
+    - name: unittest report
+      run: mvn test
+    - name: "Upload coverage to Codecov"
+      uses: codecov/codecov-action@v3
+      with:
+        fail_ci_if_error: true
+        files: target/site/jacoco/jacoco.xml
+        token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+
+    - name: makefile recipes
+      run: |
+        apt update && apt install -y make
+        make install
