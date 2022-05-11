@@ -17,7 +17,9 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <proguard-base.version>6.2.1</proguard-base.version>
+    <!-- <proguard-base.version>6.2.2</proguard-base.version> -->
+		<version.proguard>7.2.1</version.proguard>
+		<version.proguard-core>8.0.7</version.proguard-core>
   </properties>
 
   <dependencyManagement>
@@ -165,10 +167,11 @@
           <version>3.3.0</version>
         </plugin>
 
+
         <plugin>
           <groupId>com.github.wvengen</groupId>
           <artifactId>proguard-maven-plugin</artifactId>
-          <version>2.5.2</version>
+          <version>2.5.3</version>
           <executions>
             <execution>
               <phase>package</phase>
@@ -178,15 +181,48 @@
             </execution>
           </executions>
           <configuration>
+            <options>
+              <option>-keep
+                class com.example.App {
+                    public static void main(String[]);
+                }
+              </option>
+              <option>-keepattributes
+                Exceptions,
+                InnerClasses,
+                Signature,
+                Deprecated,
+                SourceFile,
+                LineNumberTable,
+                *Annotation*,
+                EnclosingMethod
+              </option>
+              <option>-dontwarn java.lang.**</option>
+              <option>-dontwarn java.io.**</option>
+            </options>
             <obfuscate>true</obfuscate>
-            <proguardVersion>${proguard-base.version}</proguardVersion>
+            <proguardVersion>${version.proguard}</proguardVersion>
+            <libs>
+              <!-- <lib>${java.home}/lib/rt.jar</lib> -->
+              <!-- <lib>${java.home}/lib/jsse.jar</lib> -->
+          </libs>
           </configuration>
           <dependencies>
+            <!-- From version 7 on we need to add two dependencies -->
             <dependency>
-              <groupId>net.sf.proguard</groupId>
+              <groupId>com.guardsquare</groupId>
               <artifactId>proguard-base</artifactId>
-              <version>${proguard-base.version}</version>
-              <scope>runtime</scope>
+              <version>${version.proguard}</version>
+              <!-- <scope>runtime</scope> -->
+              <!-- <optional>true</optional> -->
+            </dependency>
+            
+            <dependency>
+              <groupId>com.guardsquare</groupId>
+              <artifactId>proguard-core</artifactId>
+              <version>${version.proguard-core}</version>
+              <!-- <scope>runtime</scope>
+              <optional>true</optional> -->
             </dependency>
           </dependencies>
         </plugin>
