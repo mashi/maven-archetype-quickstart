@@ -20,6 +20,7 @@
     <!-- <proguard-base.version>6.2.2</proguard-base.version> -->
 		<version.proguard>7.2.1</version.proguard>
 		<version.proguard-core>8.0.7</version.proguard-core>
+    <version.proguard-base>7.1.1</version.proguard-base>
   </properties>
 
   <dependencyManagement>
@@ -31,6 +32,12 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+
+      <dependency>
+        <groupId>com.guardsquare</groupId>
+        <artifactId>proguard-base</artifactId>
+        <version>${version.proguard-base}</version>
+      </dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -167,111 +174,137 @@
           <version>3.3.0</version>
         </plugin>
 
-
         <plugin>
           <groupId>com.github.wvengen</groupId>
           <artifactId>proguard-maven-plugin</artifactId>
-          <version>2.5.3</version>
+          <version>2.4.0</version>
+          <configuration>
+            <includeDependency>false</includeDependency>
+            <injar>${project.build.finalName}.${project.packaging}</injar>
+            <outjar>${project.build.finalName}-proguard.${project.packaging}</outjar>
+            <options>
+              <option>-keepclasseswithmembers public class * { public static void main(java.lang.String[]); }</option>
+              <option>-keepattributes Signature</option>
+              <option>-keepattributes *Annotation*</option>
+              <option>-keepattributes InnerClasses,EnclosingMethod</option>
+            </options>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>com.guardsquare</groupId>
+              <artifactId>proguard-base</artifactId>
+              <version>${version.proguard-base}</version>
+              <scope>runtime</scope>
+            </dependency>
+          </dependencies>
           <executions>
             <execution>
+              <id>proguard</id>
               <phase>package</phase>
               <goals>
                 <goal>proguard</goal>
               </goals>
             </execution>
           </executions>
-          <configuration>
-            <options>
-              <option>-dontshrink</option>
-              <option>-dontoptimize</option>
-
-              <option>-adaptclassstrings</option>
-
-              <option>-keepattributes
-                Exceptions,
-                InnerClasses,
-                Signature,
-                Deprecated,
-                SourceFile,
-                LineNumberTable,
-                *Annotation*,
-                EnclosingMethod
-              </option>
-
-              <option>-keepnames interface **</option>
-
-              <option>-keepparameternames</option>
-
-              <option>-keep
-                public class com.example.App {
-                      public static void main(java.lang.String[]);
-                  }
-              </option>
-
-              <option>-ignorewarnings</option>
-
-              <!-- <option>-keep class com.waylau.proguard.service { *; }</option> -->
-              
-              <option>-keep interface * extends * { *; }</option>
-              
-              <!-- <option>-keep class com.fasterxml.jackson.** { *; }</option>
-              <option>-keep class org.json.JSONObject.** {**
-                  put(java.lang.String,java.util.Map);}</option> -->
-              <!-- <option>-keepclassmembers class * {
-                  @org.springframework.context.annotation.Bean *;
-                  @org.springframework.beans.factory.annotation.Autowired *;
-                  @org.springframework.beans.factory.annotation.Value *;
-                  }
-              </option> -->
-
-              <!-- <option>-dontwarn com.fasterxml.jackson.databind.**</option>
-              <option>-dontwarn com.fasterxml.jackson.**</option> -->
-              <option>-dontwarn java.lang.**</option>
-              <option>-dontwarn java.io.**</option>
-            </options>
-  
-            <injarNotExistsSkip>true</injarNotExistsSkip>
-            <obfuscate>true</obfuscate>
-            <proguardVersion>${version.proguard}</proguardVersion>
-            <libs>
-              <!-- <lib>${java.home}/lib/rt.jar</lib> -->
-              <!-- <lib>${java.home}/lib/jsse.jar</lib> -->
-          </libs>
-          </configuration>
-          <dependencies>
-            <!-- From version 7 on we need to add two dependencies -->
-            <dependency>
-              <groupId>com.guardsquare</groupId>
-              <artifactId>proguard-base</artifactId>
-              <version>${version.proguard}</version>
-              <!-- <scope>runtime</scope> -->
-              <!-- <optional>true</optional> -->
-            </dependency>
-          </dependencies>
         </plugin>
       </plugins>
     </pluginManagement>
 
 		<plugins>
       <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.8</version>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.0.0</version>
         <executions>
           <execution>
+            <id>enforce-dependency-convergence</id>
             <goals>
-              <goal>prepare-agent</goal>
+              <goal>enforce</goal>
             </goals>
+            <configuration>
+              <skip>true</skip>
+              <rules>
+                <dependencyConvergence />
+              </rules>
+            </configuration>
           </execution>
           <execution>
-            <id>report</id>
-            <phase>test</phase>
+            <id>enforce-require-java-version-to-[1.8.0,)</id>
             <goals>
-              <goal>report</goal>
+              <goal>enforce</goal>
             </goals>
+            <configuration>
+              <rules>
+                <requireJavaVersion>
+                  <version>[1.8.0,)</version>
+                </requireJavaVersion>
+              </rules>
+            </configuration>
+          </execution>
+          <execution>
+            <id>enforce-require-maven-version-to-[3.3.9,)</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireMavenVersion>
+                  <version>[3.3.9,)</version>
+                </requireMavenVersion>
+              </rules>
+            </configuration>
           </execution>
         </executions>
       </plugin>
-		</plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>tidy-maven-plugin</artifactId>
+        <version>1.1.0</version>
+      </plugin>
+      </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>java8-</id>
+      <activation>
+        <jdk>(,1.8]</jdk>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.github.wvengen</groupId>
+            <artifactId>proguard-maven-plugin</artifactId>
+            <configuration>
+              <libs>
+                <lib>${java.home}/lib/rt.jar</lib>
+                <lib>${java.home}/lib/jce.jar</lib>
+                <lib>${java.home}/lib/jsse.jar</lib>
+              </libs>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>java9+</id>
+      <activation>
+        <jdk>[1.9,)</jdk>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.github.wvengen</groupId>
+            <artifactId>proguard-maven-plugin</artifactId>
+            <configuration>
+              <libs>
+                <lib>${java.home}/jmods/java.base.jmod</lib>
+              </libs>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
 </project>
