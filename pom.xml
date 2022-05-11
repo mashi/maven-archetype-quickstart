@@ -200,6 +200,7 @@
               <option>-dontwarn java.lang.**</option>
               <option>-dontwarn java.io.**</option>
             </options>
+            <injarNotExistsSkip>true</injarNotExistsSkip>
             <obfuscate>true</obfuscate>
             <proguardVersion>${version.proguard}</proguardVersion>
             <libs>
