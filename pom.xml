@@ -204,8 +204,7 @@
 
               <option>-keep
                 public class com.example.App {
-                      public static
-                      void main(java.lang.String[]);
+                      public static void main(java.lang.String[]);
                   }
               </option>
 
