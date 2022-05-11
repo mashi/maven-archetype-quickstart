@@ -182,11 +182,11 @@
           </executions>
           <configuration>
             <options>
-              <option>-keep
-                class com.example.App {
-                    public static void main(String[]);
-                }
-              </option>
+              <option>-dontshrink</option>
+              <option>-dontoptimize</option>
+
+              <option>-adaptclassstrings</option>
+
               <option>-keepattributes
                 Exceptions,
                 InnerClasses,
@@ -197,9 +197,40 @@
                 *Annotation*,
                 EnclosingMethod
               </option>
+
+              <option>-keepnames interface **</option>
+
+              <option>-keepparameternames</option>
+
+              <option>-keep
+                public class com.example.App {
+                      public static
+                      void main(java.lang.String[]);
+                  }
+              </option>
+
+              <option>-ignorewarnings</option>
+
+              <!-- <option>-keep class com.waylau.proguard.service { *; }</option> -->
+              
+              <option>-keep interface * extends * { *; }</option>
+              
+              <!-- <option>-keep class com.fasterxml.jackson.** { *; }</option>
+              <option>-keep class org.json.JSONObject.** {**
+                  put(java.lang.String,java.util.Map);}</option> -->
+              <!-- <option>-keepclassmembers class * {
+                  @org.springframework.context.annotation.Bean *;
+                  @org.springframework.beans.factory.annotation.Autowired *;
+                  @org.springframework.beans.factory.annotation.Value *;
+                  }
+              </option> -->
+
+              <!-- <option>-dontwarn com.fasterxml.jackson.databind.**</option>
+              <option>-dontwarn com.fasterxml.jackson.**</option> -->
               <option>-dontwarn java.lang.**</option>
               <option>-dontwarn java.io.**</option>
             </options>
+  
             <injarNotExistsSkip>true</injarNotExistsSkip>
             <obfuscate>true</obfuscate>
             <proguardVersion>${version.proguard}</proguardVersion>
