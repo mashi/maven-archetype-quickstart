@@ -8,7 +8,13 @@ package com.example;
  * <p><img src="./doc-files/greenSquare.png" alt="sample image: a green square">
  */
 public class App {
+
+  public static String message() {
+    return "Hello World!";
+  }
+
   public static void main(String[] args) {
-    System.out.println("Hello World!");
+    String message = message();
+    System.out.println(message);
   }
 }
