@@ -17,9 +17,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <!-- <proguard-base.version>6.2.2</proguard-base.version> -->
-		<version.proguard>7.2.1</version.proguard>
-		<version.proguard-core>8.0.7</version.proguard-core>
     <version.proguard-base>7.1.1</version.proguard-base>
   </properties>
 
